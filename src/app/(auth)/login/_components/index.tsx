@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import Image from "@/components/common/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,12 +11,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import errorResponse from "@/lib/error";
+import { login } from "@/lib/session";
+import AuthService from "@/services/auth/auth.service";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 function LoginPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const formSchema = z.object({
     email: z.string().email("email tidak valid"),
     password: z.string().min(6, {
@@ -32,8 +39,20 @@ function LoginPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setLoading(true);
+      const response = await AuthService.login(values);
+      if (response.success) {
+        login(response.data.token);
+        toast.success("Login Berhasil");
+        router.replace("/");
+      }
+    } catch (error: any) {
+      errorResponse(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -79,14 +98,16 @@ function LoginPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button disabled={loading} type="submit">
+                Submit
+              </Button>
             </form>
           </Form>
         </div>
       </div>
       <div className="flex-1 hidden lg:flex">
         <div className="relative h-[80%] w-full">
-            <div/>
+          <div />
           <Image alt="logo" src="/images/banner-smartschool.png" />
         </div>
       </div>

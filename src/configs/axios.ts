@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 const API_VERSION = "/api/v1";
 
 const axiosConfig = axios.create({
-  baseURL: "/api/core" + API_VERSION,
+  baseURL: "/api" + API_VERSION,
   headers: {
     Accept: "application/json",
   },

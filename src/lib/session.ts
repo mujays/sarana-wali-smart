@@ -5,3 +5,9 @@ export function getSession() {
   if (!session) return null;
   return session;
 }
+
+export async function login(data: string) {
+  Cookies.set("session", data, {
+    expires: process.env.NODE_ENV === "development" ? 7 : 1,
+  });
+}

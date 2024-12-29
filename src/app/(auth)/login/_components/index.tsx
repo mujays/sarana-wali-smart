@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "@/components/common/image";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,11 +9,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import errorResponse from "@/lib/error";
 import { login } from "@/lib/session";
 import AuthService from "@/services/auth/auth.service";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Input } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -98,7 +97,7 @@ function LoginPage() {
                   </FormItem>
                 )}
               />
-              <Button disabled={loading} type="submit">
+              <Button loading={loading} htmlType="submit">
                 Submit
               </Button>
             </form>

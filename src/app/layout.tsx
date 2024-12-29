@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <NextTopLoader />
-        <div>{children}</div>
-        <Toaster richColors position="top-right" />
+        <AntdRegistry>
+          <NextTopLoader />
+          <div>{children}</div>
+          <Toaster richColors position="top-right" />
+        </AntdRegistry>
       </body>
     </html>
   );

@@ -8,11 +8,11 @@ export default function RProtectedLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <SidebarProvider>
         <div className="flex w-full">
           <AppSidebar />
-          <div className="grow">
+          <div className="grow min-w-0">
             <AppNavbar />
             <section>{children}</section>
           </div>

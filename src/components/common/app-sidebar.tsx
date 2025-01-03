@@ -1,5 +1,12 @@
 "use client";
-import { Home, User2Icon } from "lucide-react";
+import {
+  BanknoteIcon,
+  CoinsIcon,
+  DropletIcon,
+  Home,
+  User2Icon,
+  UsersIcon,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -27,6 +34,26 @@ const items = [
     title: "Siswa",
     url: "/siswa",
     icon: User2Icon,
+  },
+  {
+    title: "Keluarga",
+    url: "/keluarga",
+    icon: UsersIcon,
+  },
+  {
+    title: "Riwayat Penyakit",
+    url: "/riwayat-penyakit",
+    icon: DropletIcon,
+  },
+  {
+    title: "Tagihan",
+    url: "/tagihan",
+    icon: BanknoteIcon,
+  },
+  {
+    title: "Transaksi",
+    url: "/transaksi",
+    icon: CoinsIcon,
   },
 ];
 
@@ -60,7 +87,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      `py-5 flex gap-2 transition-all duration-300 hover:bg-primary/50 hover:text-white`,
+                      `py-5 flex gap-2 transition-all duration-300 hover:bg-primary/80 hover:text-white`,
                       isActive(pathname, item.url) && "bg-primary text-white"
                     )}
                   >

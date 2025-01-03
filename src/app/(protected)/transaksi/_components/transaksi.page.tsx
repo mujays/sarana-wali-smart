@@ -2,15 +2,15 @@
 import AppBreadcrumbs from "@/components/common/app-breadcrums";
 import { Table } from "antd";
 import { useState } from "react";
-import useListSiswa from "../_hooks/use-list-siswa";
+import useListTransaksi from "../_hooks/use-list-transaksi";
 
-function SiswaPage() {
+function TransaksiPage() {
   const [pagination, setPagination] = useState({
     page: 1,
     pageSize: 10,
   });
 
-  const { columns, isLoading, students } = useListSiswa({
+  const { columns, isLoading, students } = useListTransaksi({
     limit: pagination.pageSize,
     page: pagination.page,
   });
@@ -25,19 +25,18 @@ function SiswaPage() {
               url: "/",
             },
             {
-              title: "Siswa",
+              title: "Transaksi",
               url: "#",
             },
           ]}
         />
-        <p className="text-xl font-medium">Data Siswa</p>
+        <p className="text-xl font-medium">Transaksi</p>
       </div>
 
       <div className="overflow-auto">
         <Table
-          id="siswa-table"
+          id="transaksi-table"
           columns={columns}
-          rowKey={(obj) => obj.nik}
           dataSource={students?.data}
           loading={isLoading}
           pagination={{
@@ -54,4 +53,4 @@ function SiswaPage() {
   );
 }
 
-export default SiswaPage;
+export default TransaksiPage;

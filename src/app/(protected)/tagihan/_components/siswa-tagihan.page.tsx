@@ -2,7 +2,7 @@
 import AppBreadcrumbs from "@/components/common/app-breadcrums";
 import { Table } from "antd";
 import { useState } from "react";
-import useListSiswa from "../_hooks/use-list-siswa";
+import useListSiswa from "../../siswa/_hooks/use-list-siswa";
 
 function SiswaPage() {
   const [pagination, setPagination] = useState({
@@ -13,6 +13,7 @@ function SiswaPage() {
   const { columns, isLoading, students } = useListSiswa({
     limit: pagination.pageSize,
     page: pagination.page,
+    isTagihan: true,
   });
 
   return (
@@ -25,12 +26,12 @@ function SiswaPage() {
               url: "/",
             },
             {
-              title: "Siswa",
+              title: "Tagihan Siswa",
               url: "#",
             },
           ]}
         />
-        <p className="text-xl font-medium">Data Siswa</p>
+        <p className="text-xl font-medium">Pilih Siswa</p>
       </div>
 
       <div className="overflow-auto">

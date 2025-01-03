@@ -8,9 +8,10 @@ import { usePathname, useRouter } from "next/navigation";
 type Props = {
   page: number;
   limit: number;
+  isTagihan?: boolean;
 };
 
-function useListSiswa({ limit, page }: Props) {
+function useListSiswa({ limit, page, isTagihan }: Props) {
   const router = useRouter();
   const pn = usePathname();
   const { data: students, isLoading } = useQuery({
@@ -19,6 +20,7 @@ function useListSiswa({ limit, page }: Props) {
       const response = await SiswaServices.get({
         page_size: limit,
         page,
+        with: "kelas",
         // siswa_lama: true,
       });
       return response;
@@ -62,23 +64,27 @@ function useListSiswa({ limit, page }: Props) {
       render: (value = "") => <p>{value}</p>,
     },
     {
-      title: "Ibu Kandung",
-      dataIndex: "ibu_kandung",
-      render: (value = "") => <p>{value}</p>,
-    },
-    {
       title: "Action",
       key: "",
       render: (value, record) => {
         return (
           <div key={record.id} className="flex gap-[8px]">
-            <Tooltip title="Detail">
+            {isTagihan ? (
               <Button
                 onClick={() => router.push(`${pn}/${record.id}`)}
-                type="text"
-                icon={<EyeIcon className="!text-indigo-500" />}
-              />
-            </Tooltip>
+                type="primary"
+              >
+                Lihat Tagihan
+              </Button>
+            ) : (
+              <Tooltip title="Detail">
+                <Button
+                  onClick={() => router.push(`${pn}/${record.id}`)}
+                  type="text"
+                  icon={<EyeIcon className="!text-indigo-500" />}
+                />
+              </Tooltip>
+            )}
           </div>
         );
       },

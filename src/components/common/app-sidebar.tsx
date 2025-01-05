@@ -1,6 +1,7 @@
 "use client";
 import {
   BanknoteIcon,
+  BusIcon,
   CoinsIcon,
   DropletIcon,
   Home,
@@ -49,6 +50,11 @@ const items = [
     title: "Tagihan",
     url: "/tagihan",
     icon: BanknoteIcon,
+  },
+  {
+    title: "Jemputan",
+    url: "/jemputan",
+    icon: BusIcon,
   },
   {
     title: "Transaksi",

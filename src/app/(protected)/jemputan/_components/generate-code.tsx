@@ -26,8 +26,7 @@ export function GenerateJemputan() {
     },
   });
 
-  async function onSubmit(val: any) {
-    console.log(val);
+  async function onSubmit(val: { siswaId: number }) {
     try {
       setIsLoading(true);
       await JemputanServices.generate(val?.siswaId);

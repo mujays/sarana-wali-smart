@@ -9,7 +9,7 @@ import { useQRCode } from "next-qrcode";
 export function ShowCode({ pickup }: { pickup: TJemputan }) {
   const modal = useDisclosure();
   const { Canvas } = useQRCode();
-  const { data: jemputan, isLoading } = useQuery({
+  const { isLoading } = useQuery({
     enabled: modal.isOpen,
     queryKey: ["PICKUP", pickup.id],
     queryFn: async () => {
@@ -58,10 +58,10 @@ export function ShowCode({ pickup }: { pickup: TJemputan }) {
               onClick={() => {
                 const canvas = document.getElementsByTagName(
                   "canvas"
-                )[0] as any;
+                )[0] as HTMLCanvasElement;
                 if (canvas) {
-                  var url = canvas.toDataURL("image/png");
-                  var link = document.createElement("a");
+                  const url = canvas.toDataURL("image/png");
+                  const link = document.createElement("a");
                   link.download = `${pickup?.code}.png`;
                   link.href = url;
                   link.click();

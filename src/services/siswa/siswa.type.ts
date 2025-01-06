@@ -1,4 +1,3 @@
-import { TKelas } from "../kelas/kelas.type";
 import { TKeluarga } from "../keluarga/keluarga.type";
 
 export type TSiswa = {
@@ -20,7 +19,7 @@ export type TSiswa = {
   lulusan_dari: string;
   alamat_sekolah_asal: string;
   tanggal_keluar?: null | string;
-  kelas?: TKelas[];
+  // kelas?: TKelas[];
   keluarga?: TKeluarga[];
   created_at: string;
   updated_at: string;

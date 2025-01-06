@@ -58,7 +58,6 @@ function DetailTagihanSiswa() {
       return response.data;
     },
   });
-  console.log({ tahunAjaran });
   useEffect(() => {
     if (tahunAjaran) {
       setTahunAjaranId(tahunAjaran?.data.data[0].id);

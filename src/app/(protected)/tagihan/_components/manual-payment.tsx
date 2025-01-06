@@ -50,7 +50,6 @@ export function ManualPayment({ tagihanId }: { tagihanId: number }) {
         formData.append("upload", fileImg);
         const response = await axiosConfig.post("/upload", formData);
         setProofPayment(response.data.data);
-        console.log({ response });
       }
     } catch (error) {
       errorResponse(error as any);
@@ -59,8 +58,6 @@ export function ManualPayment({ tagihanId }: { tagihanId: number }) {
       e.target.value = "";
     }
   };
-
-  console.log({ proofPayment });
 
   return (
     <Tooltip title="Pembayaran">

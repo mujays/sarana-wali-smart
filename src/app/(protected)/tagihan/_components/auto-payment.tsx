@@ -10,7 +10,6 @@ function AutoPayment({ tagihanId }: { tagihanId: number }) {
     try {
       setLoadingPayment(true);
       const res = await TagihanService.payment(tagihanId);
-      console.log({ res });
       if (res.data?.Url) {
         window.location.href = res.data.Url;
       }

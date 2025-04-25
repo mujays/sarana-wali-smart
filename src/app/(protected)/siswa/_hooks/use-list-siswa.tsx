@@ -70,12 +70,20 @@ function useListSiswa({ limit, page, isTagihan }: Props) {
         return (
           <div key={record.id} className="flex gap-[8px]">
             {isTagihan ? (
-              <Button
-                onClick={() => router.push(`${pn}/${record.id}`)}
-                type="primary"
-              >
-                Lihat Tagihan
-              </Button>
+              <>
+                <Button
+                  onClick={() => router.push(`${pn}/${record.id}`)}
+                  type="primary"
+                >
+                  Lihat Tagihan
+                </Button>
+                <Button
+                  onClick={() => router.push(`${pn}/${record.id}/uang-pangkal`)}
+                  type="default"
+                >
+                  Uang Pangkal
+                </Button>
+              </>
             ) : (
               <Tooltip title="Detail">
                 <Button

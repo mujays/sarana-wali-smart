@@ -10,8 +10,8 @@ function AutoPayment({ tagihanId }: { tagihanId: number }) {
     try {
       setLoadingPayment(true);
       const res = await TagihanService.payment(tagihanId);
-      if (res.data?.Url) {
-        window.location.href = res.data.Url;
+      if (res.data?.url) {
+        window.location.href = res.data.url;
       }
     } catch {
       toast.error("Error payment");

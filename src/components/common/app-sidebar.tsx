@@ -18,6 +18,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -60,6 +63,16 @@ const items = [
     title: "Transaksi",
     url: "/transaksi",
     icon: CoinsIcon,
+    children: [
+      {
+        title: "Tagihan",
+        url: "/transaksi-tagihan",
+      },
+      {
+        title: "Uang Pangkal",
+        url: "/transaksi-uang-pangkal",
+      },
+    ],
   },
 ];
 
@@ -97,11 +110,37 @@ export function AppSidebar() {
                       isActive(pathname, item.url) && "bg-primary text-white"
                     )}
                   >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
+                    {item.children ? (
+                      <div>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </div>
+                    ) : (
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    )}
                   </SidebarMenuButton>
+                  {item.children &&
+                    item.children.map((child) => (
+                      <SidebarMenuSub key={child.url} className="mt-3">
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton
+                            asChild
+                            className={cn(
+                              `py-5 flex gap-2 transition-all duration-300 hover:bg-primary/80 hover:text-white`,
+                              isActive(pathname, child.url) &&
+                                "bg-primary/90 text-white"
+                            )}
+                          >
+                            <Link href={child.url}>
+                              <span>{child.title}</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      </SidebarMenuSub>
+                    ))}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

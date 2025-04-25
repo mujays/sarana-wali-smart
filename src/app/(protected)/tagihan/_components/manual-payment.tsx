@@ -89,7 +89,7 @@ export function ManualPayment({ tagihanId }: { tagihanId: number }) {
           className="hidden"
         />
         {isLoading ? (
-          <div className="py-4 flx justify-center">
+          <div className="py-4 flex justify-center">
             <Loader2Icon className="animate-spin" />
           </div>
         ) : proofPayment ? (

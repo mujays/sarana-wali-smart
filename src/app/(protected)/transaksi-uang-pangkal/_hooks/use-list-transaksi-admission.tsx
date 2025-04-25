@@ -1,5 +1,6 @@
-import TagihanService from "@/services/tagihan";
-import { TTransaction } from "@/services/tagihan/tagihan.type";
+import { formatCurrency } from "@/lib/utils";
+import AdmissionService from "@/services/admission";
+import { TTransactionAdmission } from "@/services/admission/tagihan.type";
 import { useQuery } from "@tanstack/react-query";
 import { Image, TableProps, Tag, Typography } from "antd";
 import moment from "moment";
@@ -10,14 +11,14 @@ type Props = {
   limit: number;
 };
 
-function useListTransaksi({ limit, page }: Props) {
+function useListTransaksiAdmission({ limit, page }: Props) {
   const { data: students, isLoading } = useQuery({
     queryKey: ["TRX", page, limit],
     queryFn: async () => {
-      const response = await TagihanService.getTrx({
+      const response = await AdmissionService.getTrx({
         page_size: limit,
         page,
-        // with: "tagihan",
+        with: "uang_pangkal",
       });
       return response;
     },
@@ -32,7 +33,7 @@ function useListTransaksi({ limit, page }: Props) {
     },
   });
 
-  const columns: TableProps<TTransaction>["columns"] = [
+  const columns: TableProps<TTransactionAdmission>["columns"] = [
     {
       title: "No",
       dataIndex: "no",
@@ -40,9 +41,12 @@ function useListTransaksi({ limit, page }: Props) {
       align: "center",
     },
     {
-      title: "ID Ipaymu",
-      dataIndex: "transaction_id_ipaymu",
-      render: (value = "") => <p>{value || "-"}</p>,
+      title: "Nama",
+      dataIndex: "uang_pangkal",
+      render: (text: string, record) => (
+        <Typography.Text>{record?.uang_pangkal?.nama}</Typography.Text>
+      ),
+      align: "center",
     },
     {
       title: "Status",
@@ -65,7 +69,7 @@ function useListTransaksi({ limit, page }: Props) {
     {
       title: "Harga",
       dataIndex: "buyer_payment",
-      render: (value = "") => <p>{value || "-"}</p>,
+      render: (value = "") => <p>{formatCurrency(value) || "-"}</p>,
     },
     {
       title: "Metode Pembayaran",
@@ -78,7 +82,7 @@ function useListTransaksi({ limit, page }: Props) {
       render: (value = "") => <p>{value ? moment(value).format("LL") : "-"}</p>,
     },
     {
-      title: "Tanggal Dibayarkan",
+      title: "Bukti Pembayaran",
       dataIndex: "bukti_pembayaran",
       render: (value = "") =>
         value ? (
@@ -95,4 +99,4 @@ function useListTransaksi({ limit, page }: Props) {
   return { columns, students, isLoading };
 }
 
-export default useListTransaksi;
+export default useListTransaksiAdmission;

@@ -33,7 +33,7 @@ function KeluargaPage() {
 
   useEffect(() => {
     if (students) {
-      setSiswaId(students.data[0].id);
+      setSiswaId(students.data?.[0]?.id);
     }
   }, [students]);
 
@@ -80,7 +80,7 @@ function KeluargaPage() {
           id="keluarga-table"
           columns={columns}
           dataSource={families?.data}
-          loading={isLoading || !siswaId}
+          loading={isLoading}
           pagination={{
             onChange: (page, pageSize) => {
               setPagination({ page, pageSize });

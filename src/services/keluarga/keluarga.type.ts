@@ -4,7 +4,14 @@ export type TKeluarga = {
   nama: string;
   hubungan: string;
   pekerjaan: string;
+  jenis_kelamin: string;
+  nik: string;
+  ktp: string;
+  agama: string;
+  suku: string;
+  alamat: string;
   gaji: string;
+  email: string;
   tanggal_lahir: string;
   pendidikan: string;
   no_hp: string;

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import Image from "@/components/common/image";
 import {
   Form,
   FormControl,
@@ -14,6 +13,8 @@ import { login } from "@/lib/session";
 import AuthService from "@/services/auth/auth.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "antd";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -58,7 +59,12 @@ function LoginPage() {
     <section className="min-h-screen flex items-center gap-10 p-10">
       <div className="flex-1 space-y-10">
         <div className="w-48">
-          <Image alt="logo" src="/images/smart-logo.svg" />
+          <Image
+            alt="logo"
+            src="/images/smart-logo.svg"
+            width={500}
+            height={300}
+          />
         </div>
 
         <div className="space-y-3">
@@ -87,7 +93,7 @@ function LoginPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input
+                      <Input.Password
                         placeholder="Password"
                         type="password"
                         {...field}
@@ -97,17 +103,30 @@ function LoginPage() {
                   </FormItem>
                 )}
               />
-              <Button loading={loading} htmlType="submit">
-                Submit
+              <Button loading={loading} htmlType="submit" type="primary">
+                Login
               </Button>
             </form>
           </Form>
+
+          <p className="text-sm">
+            Lupa password?{" "}
+            <Link className="text-blue-500" href="/lupa-password">
+              klik disini
+            </Link>
+          </p>
         </div>
       </div>
       <div className="flex-1 hidden lg:flex">
-        <div className="relative h-[80%] w-full">
-          <div />
-          <Image alt="logo" src="/images/banner-smartschool.png" />
+        <div className="relative w-full flex justify-center">
+          <Image
+            alt="Banner"
+            src="/images/banner-smartschool.png"
+            width={500}
+            height={300}
+            priority
+            className="h-[80vh] w-[500px]"
+          />
         </div>
       </div>
     </section>

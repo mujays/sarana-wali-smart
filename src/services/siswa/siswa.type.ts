@@ -17,10 +17,66 @@ export type TSiswa = {
   kewarganegaraan: string;
   tanggal_masuk: string;
   lulusan_dari: string;
+  jenis_kelamin: string;
   alamat_sekolah_asal: string;
+  url_kia: string;
+  url_kk: string;
+  url_akta: string;
+  avatar: string;
+  telp_rumah: string;
+  suku: string;
+  tinggi_badan: string;
+  berat_badan: string;
+  lingkar_kepala: string;
+  tempat_lahir: string;
+  npsn_asal: string;
+  tahun_lulus_asal: string;
+  tinggal_bersama: string;
+  anak_ke: string;
+  jumlah_saudara: string;
   tanggal_keluar?: null | string;
-  // kelas?: TKelas[];
-  keluarga?: TKeluarga[];
+  kelas?: TKelas[];
+  keluarga: TKeluarga[];
+  history_kelas: {
+    id: number;
+    siswa_id: number;
+    tahun_ajaran_id: number;
+    tahun_ajaran: TTahunAjaran;
+    kelas: TKelas;
+  }[];
+  created_at: string;
+  updated_at: string;
+};
+
+export type TKelas = {
+  id: number;
+  tahun_ajaran_id: number;
+  tingkatan_id: number;
+  nama: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  siswa: TSiswa[];
+  siswa_count: number;
+  tahun_ajaran: TTahunAjaran;
+};
+
+export type TTahunAjaran = {
+  id: number;
+  name: string;
+  jumlah: number;
+  jumlah_sd: number;
+  jumlah_smp: number;
+  jumlah_sma: number;
+  jumlah_tk: number;
+  jumlah_anak_laki_smp: number;
+  jumlah_anak_perempuan_smp: number;
+  jumlah_anak_laki_sma: number;
+  jumlah_anak_perempuan_sma: number;
+  jumlah_laki_tk: number;
+  jumlah_perempuan_tk: number;
+  jumlah_anak_laki_sd: number;
+  jumlah_anak_perempuan_sd: number;
   created_at: string;
   updated_at: string;
 };

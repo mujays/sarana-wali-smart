@@ -5,18 +5,29 @@ import Cookies from "js-cookie";
 import { ChevronDownIcon, LogOutIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { SidebarTrigger } from "../ui/sidebar";
+import { useQuery } from "@tanstack/react-query";
+import AuthService from "@/services/auth/auth.service";
 
 function AppNavbar() {
   const handleLogout = () => {
     Cookies.remove("session");
     window.location.href = "/login";
   };
+
+  const { data: me } = useQuery({
+    queryKey: ["ME"],
+    queryFn: async () => {
+      const response = await AuthService.me({});
+      return response;
+    },
+  });
+
   return (
     <nav className="h-12 w-full border-b flex justify-between items-center pr-4">
       <SidebarTrigger />
 
       <div className="flex items-center gap-2">
-        <Avatar />
+        <Avatar src="/images/avatar.png" />
 
         <Dropdown
           placement="bottomRight"
@@ -77,7 +88,7 @@ function AppNavbar() {
           }}
         >
           <div className="flex items-center gap-1 cursor-pointer">
-            <p>User</p>
+            <p>{me?.data.nama}</p>
             <ChevronDownIcon />
           </div>
         </Dropdown>

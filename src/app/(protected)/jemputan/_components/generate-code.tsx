@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDisclosure } from "@/hooks/use-disclosure";
 import errorResponse from "@/lib/error";
 import JemputanServices from "@/services/jemputan";
 import SiswaServices from "@/services/siswa";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button, Form, Modal, Select, Tooltip, Typography } from "antd";
+import { Button, Form, Input, Modal, Select, Tooltip, Typography } from "antd";
 import { AxiosError } from "axios";
 import { BusIcon } from "lucide-react";
 import * as React from "react";
@@ -26,10 +27,12 @@ export function GenerateJemputan() {
     },
   });
 
-  async function onSubmit(val: { siswaId: number }) {
+  async function onSubmit(val: any) {
+    const { siswaId, ...otherData } = val;
+
     try {
       setIsLoading(true);
-      await JemputanServices.generate(val?.siswaId);
+      await JemputanServices.generate(siswaId, otherData);
       toast.success("Data berhasil digenerate!");
       queryClient.resetQueries({ queryKey: ["PICKUP"] });
       modal.onClose();
@@ -73,7 +76,7 @@ export function GenerateJemputan() {
             <Form.Item
               label="Siswa"
               name="siswaId"
-              className="w-full mb-2"
+              className="w-full !mb-2"
               rules={[{ required: true, message: "Siswa harus diisi" }]}
             >
               <Select
@@ -84,6 +87,24 @@ export function GenerateJemputan() {
                   value: stu.id,
                 }))}
               />
+            </Form.Item>
+          </div>
+          <div className="flex gap-2">
+            <Form.Item
+              label="Nama Penjemput"
+              name="name"
+              className="w-full !mb-2"
+              rules={[{ required: true, message: "Nama harus diisi" }]}
+            >
+              <Input placeholder="Nama" maxLength={255} />
+            </Form.Item>
+            <Form.Item label="Nomor Plat" name="phone" className="w-full !mb-2">
+              <Input placeholder="Nomor Plat" maxLength={255} />
+            </Form.Item>
+          </div>
+          <div className="flex gap-2">
+            <Form.Item label="Catatan" name="note" className="w-full !mb-2">
+              <Input.TextArea placeholder="Tulis Catatan..." maxLength={255} />
             </Form.Item>
           </div>
         </Form>

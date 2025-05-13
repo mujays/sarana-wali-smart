@@ -22,7 +22,7 @@ export function PaymentAdmission({
   const modal = useDisclosure();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoadingUpload, setIsLoadingUpload] = React.useState(false);
-  const [proofPayment, setProofPayment] = React.useState("ss");
+  const [proofPayment, setProofPayment] = React.useState("");
   const [nominal, setNominal] = React.useState("");
 
   async function handlePayment() {

@@ -64,7 +64,7 @@ function useListTagihan({ limit, page, tahunAjaranId }: Props) {
       dataIndex: "jatuh_tempo",
       render: (value = "", record) => (
         <p style={{ textTransform: "uppercase" }}>
-          {new Date(value).getDate()} {record.bulan}
+          {new Date(value).getDate()} {record?.bulan}
         </p>
       ),
     },
@@ -82,12 +82,12 @@ function useListTagihan({ limit, page, tahunAjaranId }: Props) {
       title: "Action",
       key: "",
       render: (value, record) => {
-        return record.is_lunas ? (
+        return record?.is_lunas ? (
           "-"
         ) : (
-          <div key={record.id} className="flex gap-[8px]">
-            <ManualPayment tagihanId={record.id} />
-            <AutoPayment tagihanId={record.id} />
+          <div key={record?.id} className="flex gap-[8px]">
+            <ManualPayment tagihanId={record?.id} />
+            <AutoPayment tagihanId={record?.id} />
           </div>
         );
       },

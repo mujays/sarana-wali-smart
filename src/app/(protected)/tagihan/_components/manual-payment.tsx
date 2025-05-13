@@ -73,7 +73,10 @@ export function ManualPayment({ tagihanId }: { tagihanId: number }) {
         }
         maskClosable={false}
         open={modal.isOpen}
-        onCancel={() => modal.onClose()}
+        onCancel={() => {
+          modal.onClose();
+          setProofPayment("");
+        }}
         okText="Konfirmasi"
         okButtonProps={{
           loading: isLoadingUpload,

@@ -39,6 +39,8 @@ function LoginPage() {
     },
   });
 
+  console.log("EXAMPLE");
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setLoading(true);

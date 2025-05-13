@@ -120,7 +120,13 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
             className="w-full mb-2"
             rules={[{ required: true, message: "Hubungan harus diisi" }]}
           >
-            <Input placeholder="Hubungan" maxLength={255} />
+            <Input
+              placeholder="Hubungan"
+              maxLength={255}
+              disabled={["Ayah", "Ibu"].includes(
+                family?.data?.hubungan as string
+              )}
+            />
           </Form.Item>
           <div className="flex gap-2">
             <Form.Item

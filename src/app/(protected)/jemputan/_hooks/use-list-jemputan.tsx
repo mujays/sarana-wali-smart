@@ -5,6 +5,7 @@ import { TableProps, Tag, Typography } from "antd";
 import moment from "moment-timezone";
 import "moment/locale/id";
 import { ShowCode } from "../_components/show-code";
+import { DetailJemputan } from "../_components/detail-jemputan";
 
 type Props = {
   page: number;
@@ -103,6 +104,7 @@ function useListJemputan({ limit, page }: Props) {
       render: (value, record) => {
         return (
           <div key={record.id} className="flex gap-[8px]">
+            <DetailJemputan pickup={record} />
             <ShowCode pickup={record} />
           </div>
         );

@@ -3,7 +3,7 @@ import JemputanServices from "@/services/jemputan";
 import { TJemputan } from "@/services/jemputan/jemputan.type";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Modal, Tooltip } from "antd";
-import { EyeIcon, Loader2Icon } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { useQRCode } from "next-qrcode";
 
 export function ShowCode({ pickup }: { pickup: TJemputan }) {
@@ -20,11 +20,9 @@ export function ShowCode({ pickup }: { pickup: TJemputan }) {
 
   return (
     <Tooltip title="Generate">
-      <Button
-        icon={<EyeIcon className="w-5 h-5 !text-primary" />}
-        type="text"
-        onClick={() => modal.onOpen()}
-      />
+      <Button type="dashed" onClick={() => modal.onOpen()}>
+        Kode
+      </Button>
 
       <Modal
         open={modal.isOpen}

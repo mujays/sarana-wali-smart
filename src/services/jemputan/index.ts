@@ -19,9 +19,10 @@ const JemputanServices = {
     );
     return response.data;
   },
-  generate: async (siswaId: number) => {
-    const response = await axiosConfig.get<BaseResponseDto<TJemputan>>(
-      `siswa/${siswaId}/pickup`
+  generate: async (siswaId: number, payload: any) => {
+    const response = await axiosConfig.post<BaseResponseDto<TJemputan>>(
+      `siswa/${siswaId}/pickup`,
+      payload
     );
     return response.data;
   },

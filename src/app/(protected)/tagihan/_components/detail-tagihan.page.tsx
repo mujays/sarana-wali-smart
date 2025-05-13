@@ -39,7 +39,7 @@ function DetailTagihanSiswa() {
     queryKey: ["ACADEMIC"],
     queryFn: async () => {
       const response = await TagihanService.getTahunAjaran({
-        page_size: 1000000,
+        select: true,
         page: 1,
       });
       return response;
@@ -60,11 +60,10 @@ function DetailTagihanSiswa() {
   });
   useEffect(() => {
     if (tahunAjaran) {
-      setTahunAjaranId(tahunAjaran?.data?.[0].id);
+      setTahunAjaranId(tahunAjaran?.data?.data?.[0].id);
     }
   }, [tahunAjaran]);
 
-  console.log({ tahunAjaran });
   return (
     <div className="p-4 space-y-4">
       <div className="space-y-2">
@@ -98,7 +97,7 @@ function DetailTagihanSiswa() {
             }}
             placeholder="Tahun Ajaran"
             className="w-40"
-            options={tahunAjaran?.data?.map(
+            options={tahunAjaran?.data?.data?.map(
               (ta: { name: string; id: string }) => ({
                 label: ta.name,
                 value: ta.id,

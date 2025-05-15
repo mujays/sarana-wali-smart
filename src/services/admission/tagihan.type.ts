@@ -1,4 +1,7 @@
+import { TSiswa } from "../siswa/siswa.type";
+
 export type TAdmission = {
+  tagihan: string;
   id: number;
   siswa_id: number;
   tahun_ajaran_id: number;
@@ -10,6 +13,7 @@ export type TAdmission = {
   tanggal_mulai: string;
   tanggal_berakhir: string;
   status: string;
+  siswa: TSiswa;
   created_at: string;
   updated_at: string;
 };

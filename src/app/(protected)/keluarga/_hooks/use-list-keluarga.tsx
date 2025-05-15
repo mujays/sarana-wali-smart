@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { TableProps, Typography } from "antd";
 import { DeleteKeluarga } from "../_components/delete-keluarga";
 import EditKeluarga from "../_components/edit-keluarga";
+import DetailKeluarga from "../_components/detail-keluarga";
 
 type Props = {
   page: number;
@@ -70,6 +71,7 @@ function useListKeluarga({ limit, page, siswa }: Props) {
           <div key={record.id} className="flex gap-[8px]">
             <EditKeluarga keluargaId={record.id} />
             <DeleteKeluarga keluargaId={record.id} />
+            <DetailKeluarga keluarga={record} />
           </div>
         );
       },

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Image, TableProps, Tag, Typography } from "antd";
 import moment from "moment";
 import "moment/locale/id";
+import { Invoices } from "../_components/Invoices";
 
 type Props = {
   page: number;
@@ -18,7 +19,7 @@ function useListTransaksi({ limit, page }: Props) {
       const response = await TagihanService.getTrx({
         page_size: limit,
         page,
-        // with: "tagihan",
+        with: "tagihan.siswa",
       });
       return response;
     },
@@ -38,6 +39,14 @@ function useListTransaksi({ limit, page }: Props) {
       title: "No",
       dataIndex: "no",
       render: (text: string) => <Typography.Text>{text}</Typography.Text>,
+      align: "center",
+    },
+    {
+      title: "Tagihan",
+      dataIndex: "tagihan",
+      render: (text: string, record) => (
+        <Typography.Text>{record?.tagihan?.tagihan}</Typography.Text>
+      ),
       align: "center",
     },
     {
@@ -83,6 +92,16 @@ function useListTransaksi({ limit, page }: Props) {
             className="!w-20 !h-20 object-cover"
             alt="bukti transfer"
           />
+        ) : (
+          "-"
+        ),
+    },
+    {
+      title: "Invoice",
+      dataIndex: "transaksi",
+      render: (value, record) =>
+        record.status.toUpperCase() === "BERHASIL" ? (
+          <Invoices transactions={record} />
         ) : (
           "-"
         ),

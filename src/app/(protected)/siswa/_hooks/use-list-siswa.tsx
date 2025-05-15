@@ -2,7 +2,7 @@ import SiswaServices from "@/services/siswa";
 import { TSiswa } from "@/services/siswa/siswa.type";
 import { useQuery } from "@tanstack/react-query";
 import { Button, TableProps, Tooltip, Typography } from "antd";
-import { EyeIcon } from "lucide-react";
+import { EyeIcon, PencilIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
@@ -85,13 +85,22 @@ function useListSiswa({ limit, page, isTagihan }: Props) {
                 </Button>
               </>
             ) : (
-              <Tooltip title="Detail">
-                <Button
-                  onClick={() => router.push(`${pn}/${record.id}`)}
-                  type="text"
-                  icon={<EyeIcon className="!text-indigo-500" />}
-                />
-              </Tooltip>
+              <>
+                <Tooltip title="Detail">
+                  <Button
+                    onClick={() => router.push(`${pn}/${record.id}`)}
+                    type="text"
+                    icon={<EyeIcon className="!text-indigo-500" />}
+                  />
+                </Tooltip>
+                <Tooltip title="Edit">
+                  <Button
+                    onClick={() => router.push(`${pn}/${record.id}`)}
+                    type="text"
+                    icon={<PencilIcon className="!text-indigo-500 w-4 h-4" />}
+                  />
+                </Tooltip>
+              </>
             )}
           </div>
         );

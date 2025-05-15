@@ -19,7 +19,7 @@ function Dropfile({
   type = "filled",
   id = "fileInput",
   accept = ".pdf,.jpg,.jpeg,.png",
-  mimeType = ["image/jpeg", "image/png", "image/jpeg", "application/pdf"],
+  mimeType = ["image/jpeg", "image/png", "image/jpeg"],
 }: Props) {
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();

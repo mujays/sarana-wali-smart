@@ -31,6 +31,7 @@ export type TTransaction = {
   payment_at: string | null;
   payment_method: null | string;
   bukti_pembayaran: null | string;
+  tagihan: TTagihan;
   created_at: string;
   updated_at: string;
 };

@@ -60,7 +60,7 @@ function DetailTagihanSiswa() {
   });
   useEffect(() => {
     if (tahunAjaran) {
-      setTahunAjaranId(tahunAjaran?.data?.data?.[0].id);
+      setTahunAjaranId(tahunAjaran?.data?.[0].id);
     }
   }, [tahunAjaran]);
 
@@ -97,7 +97,7 @@ function DetailTagihanSiswa() {
             }}
             placeholder="Tahun Ajaran"
             className="w-40"
-            options={tahunAjaran?.data?.data?.map(
+            options={tahunAjaran?.data?.map(
               (ta: { name: string; id: string }) => ({
                 label: ta.name,
                 value: ta.id,

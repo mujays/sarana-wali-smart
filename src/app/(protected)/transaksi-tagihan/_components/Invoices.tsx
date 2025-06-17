@@ -15,7 +15,6 @@ export function Invoices({
 }: {
   transactions: TTransaction | TTransactionAdmission;
 }) {
-  const type = "sd";
   const modal = useDisclosure();
   const [isLoading, setIsLoading] = React.useState(false);
   const [imageData, setImageData] = React.useState("");
@@ -74,7 +73,7 @@ export function Invoices({
       undefined,
       "FAST"
     );
-    pdf.save(`${tagihan.siswa.nama}-${tagihan.siswa.nis}-${tagihan.id}.pdf`);
+    pdf.save(`${tagihan?.siswa.nama}-${tagihan?.siswa.nis}-${tagihan?.id}.pdf`);
   }
 
   React.useEffect(() => {
@@ -106,7 +105,12 @@ export function Invoices({
         okText="Download"
         loading={isLoading}
       >
-        <div className="space-y-3">
+        <div className="space-y-3 relative">
+          {transactions.status.toLowerCase() === "berhasil" && (
+            <div className="absolute bottom-2 left-2 text-red-500 font-bold text-3xl rotate-[-20deg] opacity-30 border-4 border-red-500 px-4 py-2 rounded-md">
+              LUNAS
+            </div>
+          )}
           <div className="flex gap-2 items-center border-b pb-2">
             <Image
               width={500}
@@ -145,21 +149,21 @@ export function Invoices({
                 </div>
                 <div className="flex gap-3">
                   <p className="w-[100px]">Nama</p>
-                  <p>: {tagihan.siswa.nama}</p>
+                  <p>: {tagihan?.siswa.nama}</p>
                 </div>
                 <div className="flex gap-3">
                   <p className="w-[100px]">Kelas</p>
-                  <p>: {tagihan.siswa.kelas?.[0].nama || "-"}</p>
+                  <p>: {tagihan?.siswa.kelas?.[0].nama || "-"}</p>
                 </div>
               </div>
               <div className="space-y-1">
                 <div className="flex gap-3">
                   <p className="w-[120px]">No. Tagihan</p>
-                  <p>: {tagihan.id}</p>
+                  <p>: {tagihan?.id}</p>
                 </div>
                 <div className="flex gap-3">
                   <p className="w-[120px] whitespace-nowrap">Nama Tagihan</p>
-                  <p>: {tagihan.nama || (tagihan as any).tagihan}</p>
+                  <p>: {tagihan?.nama || tagihan?.tagihan}</p>
                 </div>
                 <div className="flex gap-3">
                   <p className="w-[120px] whitespace-nowrap">Tanggal Bayar</p>
@@ -173,7 +177,6 @@ export function Invoices({
               </div>
             </div>
           </div>
-
           <table className="min-w-full border text-xs border-gray-200 rounded-lg">
             {/* Header */}
             <thead className="bg-gray-100">
@@ -191,7 +194,7 @@ export function Invoices({
                   {moment(transactions.created_at).format("LL")}
                 </td>
                 <td className="px-4 py-1 border text-center">
-                  {(tagihan as any)?.tagihan || tagihan.nama}
+                  {tagihan?.tagihan || tagihan?.nama}
                 </td>
                 <td className="px-4 py-1 border text-center">
                   {formatCurrency(transactions.buyer_payment)}
@@ -207,7 +210,6 @@ export function Invoices({
               </tr>
             </tbody>
           </table>
-
           <div className="space-y-2">
             <p className="text-center">
               *) Sah jika ada cetakan data komputer atau tanda tangan yang
@@ -222,12 +224,6 @@ export function Invoices({
 
             <div className="flex justify-around">
               <div className="space-y-14">
-                <p>Petugas Bank</p>
-                <p className="text-center text-gray-400">
-                  .....................
-                </p>
-              </div>
-              <div className="space-y-14">
                 <p>Tanda Tangan</p>
                 <p className="text-center">Risma Amelia</p>
               </div>
@@ -237,7 +233,12 @@ export function Invoices({
 
         {/* RESULT PDF */}
 
-        <div className="space-y-3 hidden" ref={pdfRef}>
+        <div className="space-y-3 hidden absolute" ref={pdfRef}>
+          {transactions.status.toLowerCase() === "berhasil" && (
+            <div className="absolute bottom-14 left-14 text-red-500 font-bold text-3xl rotate-[-20deg] opacity-30 border-4 border-red-500 px-4 h-14 flex items-center pb-6 rounded-md">
+              LUNAS
+            </div>
+          )}
           <div className="flex gap-2 items-center pb-5 border-b">
             <Image
               width={500}
@@ -246,7 +247,7 @@ export function Invoices({
               src="/icons/smart-icon.svg"
               className="w-14"
             />
-            {type === "sd" ? (
+            {tagihan.siswa.type === "SD" ? (
               <div>
                 <p className="font-medium text-lg">SDS SMART SCHOOL</p>
                 <p>Jl. Kecapi No. 49 Jagakarsa</p>
@@ -276,21 +277,21 @@ export function Invoices({
                 </div>
                 <div className="flex gap-3">
                   <p className="w-[100px]">Nama</p>
-                  <p>: {tagihan.siswa.nama}</p>
+                  <p>: {tagihan?.siswa.nama}</p>
                 </div>
                 <div className="flex gap-3">
                   <p className="w-[100px]">Kelas</p>
-                  <p>: {tagihan.siswa.kelas?.[0].nama || "-"}</p>
+                  <p>: {tagihan?.siswa.kelas?.[0].nama || "-"}</p>
                 </div>
               </div>
               <div className="space-y-1">
                 <div className="flex gap-3">
                   <p className="w-[120px]">No. Tagihan</p>
-                  <p>: {tagihan.id}</p>
+                  <p>: {tagihan?.id}</p>
                 </div>
                 <div className="flex gap-3">
                   <p className="w-[120px] whitespace-nowrap">Nama Tagihan</p>
-                  <p>: {tagihan.nama || (tagihan as any)?.tagihan}</p>
+                  <p>: {tagihan?.nama || tagihan?.tagihan}</p>
                 </div>
                 <div className="flex gap-3">
                   <p className="w-[120px] whitespace-nowrap">Tanggal Bayar</p>
@@ -324,7 +325,7 @@ export function Invoices({
                   {moment(transactions.created_at).format("LL")}
                 </td>
                 <td className="px-4 pb-4 py-1 border text-center">
-                  {(tagihan as any)?.tagihan || tagihan.nama}
+                  {tagihan?.tagihan || tagihan?.nama}
                 </td>
                 <td className="px-4 pb-4 py-1 border text-center">
                   {formatCurrency(transactions.buyer_payment)}
@@ -354,12 +355,6 @@ export function Invoices({
             </p>
 
             <div className="flex justify-around">
-              <div className="space-y-14">
-                <p>Petugas Bank</p>
-                <p className="text-center text-gray-400">
-                  .....................
-                </p>
-              </div>
               <div className="space-y-14">
                 <p>Tanda Tangan</p>
                 <p className="text-center">Risma Amelia</p>

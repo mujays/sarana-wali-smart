@@ -83,7 +83,7 @@ function useListTransaksi({ limit, page }: Props) {
       render: (value = "") => <p>{value ? moment(value).format("LL") : "-"}</p>,
     },
     {
-      title: "Tanggal Dibayarkan",
+      title: "Bukti Pembayaran",
       dataIndex: "bukti_pembayaran",
       render: (value = "") =>
         value ? (

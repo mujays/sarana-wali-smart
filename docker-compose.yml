@@ -5,8 +5,8 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - shared_net
+      - caddy
 
 networks:
-  shared_net:
+  caddy:
     external: true

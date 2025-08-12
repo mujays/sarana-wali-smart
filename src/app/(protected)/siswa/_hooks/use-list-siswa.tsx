@@ -95,7 +95,7 @@ function useListSiswa({ limit, page, isTagihan }: Props) {
                 </Tooltip>
                 <Tooltip title="Edit">
                   <Button
-                    onClick={() => router.push(`${pn}/${record.id}`)}
+                    onClick={() => router.push(`${pn}/${record.id}/edit`)}
                     type="text"
                     icon={<PencilIcon className="!text-indigo-500 w-4 h-4" />}
                   />

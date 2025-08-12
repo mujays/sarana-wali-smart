@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axiosConfig from "@/configs/axios";
 import { BaseResponseDto } from "@/types/response";
 import { ForgotPasswordTokenType, LoginResponseDto } from "./auth.dto";
@@ -36,6 +37,14 @@ const AuthService = {
     const response = await axiosConfig.post<
       BaseResponseDto<ForgotPasswordTokenType>
     >(`/reset-password`, payload);
+    return response.data;
+  },
+  updatePassword: async (payload: any) => {
+    const response = await axiosConfig.put(`/wali`, payload);
+    return response.data;
+  },
+  resetPassword: async (payload: any) => {
+    const response = await axiosConfig.post(`/reset-password`, payload);
     return response.data;
   },
 };

@@ -21,6 +21,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -116,10 +117,12 @@ export function AppSidebar() {
                         <span>{item.title}</span>
                       </div>
                     ) : (
-                      <Link href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
+                      <SidebarTrigger asChild className="flex justify-start">
+                        <Link href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarTrigger>
                     )}
                   </SidebarMenuButton>
                   {item.children &&

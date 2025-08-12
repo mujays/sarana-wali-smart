@@ -43,6 +43,10 @@ const AuthService = {
     const response = await axiosConfig.put(`/wali`, payload);
     return response.data;
   },
+  resetPassword: async (payload: any) => {
+    const response = await axiosConfig.post(`/reset-password`, payload);
+    return response.data;
+  },
 };
 
 export default AuthService;

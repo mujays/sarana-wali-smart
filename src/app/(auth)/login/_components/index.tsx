@@ -63,7 +63,7 @@ function LoginPage() {
         <div className="w-48">
           <Image
             alt="logo"
-            src="/images/smart-logo.svg"
+            src="/images/smart-logo.png"
             width={500}
             height={300}
           />

@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Select, Table } from "antd";
 import { Loader2Icon } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useListTagihan from "../hooks/useListTagihan";
 
 function DetailTagihanSiswa() {
@@ -58,6 +58,37 @@ function DetailTagihanSiswa() {
       return response.data;
     },
   });
+
+  const memoTahunAjaran = useMemo(() => {
+    return tahunAjaran?.data
+      .find((ta: any) => ta.id === tahunAjaranId)
+      ?.name.split("/");
+  }, [tahunAjaran, tahunAjaranId]);
+
+  const mapping = useMemo(() => {
+    if (!memoTahunAjaran?.length || !billMonthly) return {};
+
+    const bulanKeys = Object.keys(billMonthly);
+
+    const startIndex = bulanKeys.indexOf("Juli");
+    const bulanAkademik = [
+      ...bulanKeys.slice(startIndex),
+      ...bulanKeys.slice(0, startIndex),
+    ];
+
+    const result: Record<
+      string,
+      (typeof billMonthly)[keyof typeof billMonthly]
+    > = {};
+
+    bulanAkademik.forEach((bulan: any, idx) => {
+      const tahun = idx < 6 ? memoTahunAjaran[0] : memoTahunAjaran[1];
+      result[`${bulan} ${tahun}`] = billMonthly[bulan];
+    });
+
+    return result;
+  }, [tahunAjaran, billMonthly]);
+
   useEffect(() => {
     if (tahunAjaran) {
       setTahunAjaranId(tahunAjaran?.data?.[0].id);
@@ -112,7 +143,7 @@ function DetailTagihanSiswa() {
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-            {Object.entries(billMonthly || {}).map(([month, value]) => (
+            {Object.entries(mapping || {}).map(([month, value]) => (
               <div key={month} className="rounded border">
                 <div className="bg-gray-200 flex items-center justify-center h-10 font-medium">
                   {month}

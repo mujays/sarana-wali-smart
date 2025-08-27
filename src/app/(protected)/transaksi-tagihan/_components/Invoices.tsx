@@ -107,7 +107,7 @@ export function Invoices({
       >
         <div className="space-y-3 relative">
           {transactions.status.toLowerCase() === "berhasil" && (
-            <div className="absolute bottom-2 left-2 text-red-500 font-bold text-3xl rotate-[-20deg] opacity-30 border-4 border-red-500 px-4 py-2 rounded-md">
+            <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-gray-300 font-bold text-[10rem] rotate-[-20deg] opacity-30 border-4 border-gray-300 px-20 py-2 rounded-md">
               LUNAS
             </div>
           )}
@@ -235,7 +235,7 @@ export function Invoices({
 
         <div className="space-y-3 hidden absolute" ref={pdfRef}>
           {transactions.status.toLowerCase() === "berhasil" && (
-            <div className="absolute bottom-14 left-14 text-red-500 font-bold text-3xl rotate-[-20deg] opacity-30 border-4 border-red-500 px-4 h-14 flex items-center pb-6 rounded-md">
+            <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-gray-300 font-bold text-[10rem] rotate-[-20deg] opacity-30 border-4 border-gray-300 px-20 pb-[100px] rounded-md">
               LUNAS
             </div>
           )}

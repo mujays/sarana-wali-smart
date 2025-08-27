@@ -57,17 +57,30 @@ function useListAdmission({ limit, page }: Props) {
       ),
     },
     {
-      title: "Biaya",
+      title: "Nominal",
       dataIndex: "nominal",
       render: (value = "") => (
-        <p style={{ textTransform: "uppercase" }}>{formatCurrency(value)}</p>
+        <p className="font-bold" style={{ textTransform: "uppercase" }}>
+          {formatCurrency(value)}
+        </p>
       ),
     },
     {
-      title: "Terbayarkan",
+      title: "Uang Masuk",
       dataIndex: "pembayaran_sudah",
       render: (value = "") => (
-        <p style={{ textTransform: "uppercase" }}>{formatCurrency(value)}</p>
+        <p className="!text-green-500" style={{ textTransform: "uppercase" }}>
+          {formatCurrency(value)}
+        </p>
+      ),
+    },
+    {
+      title: "Sisa Pembayaran",
+      dataIndex: "sisa_pembayaran",
+      render: (value, record) => (
+        <p className="!text-red-400" style={{ textTransform: "uppercase" }}>
+          {formatCurrency(record.nominal - record.pembayaran_sudah)}
+        </p>
       ),
     },
     {

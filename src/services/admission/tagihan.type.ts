@@ -5,7 +5,7 @@ export type TAdmission = {
   id: number;
   siswa_id: number;
   tahun_ajaran_id: number;
-  nama: "Uang Pangkal kelas 1";
+  nama: string;
   nominal: number;
   cicilan: number;
   pembayaran_sudah: number;

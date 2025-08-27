@@ -81,7 +81,7 @@ function useListSiswa({ limit, page, isTagihan }: Props) {
                   onClick={() => router.push(`${pn}/${record.id}/uang-pangkal`)}
                   type="default"
                 >
-                  Uang Pangkal
+                  Tagihan Lainnya
                 </Button>
               </>
             ) : (

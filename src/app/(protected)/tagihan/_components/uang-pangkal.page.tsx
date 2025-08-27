@@ -38,12 +38,12 @@ function UangPangkalPage() {
               url: "/",
             },
             {
-              title: "Uang Pangkal",
+              title: "Tagihan Lainnya",
               url: "#",
             },
           ]}
         />
-        <p className="text-xl font-medium">Uang Pangkal {siswa?.nama}</p>
+        <p className="text-xl font-medium">Tagihan Lainnya {siswa?.nama}</p>
       </div>
 
       <div className="overflow-auto">

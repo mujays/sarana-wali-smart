@@ -30,7 +30,7 @@ function TransaksiPage() {
             },
           ]}
         />
-        <p className="text-xl font-medium">Transaksi Uang Pangkal</p>
+        <p className="text-xl font-medium">Transaksi Tagihan Lainnya</p>
       </div>
 
       <div className="overflow-auto">

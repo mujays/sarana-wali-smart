@@ -70,7 +70,7 @@ const items = [
         url: "/transaksi-tagihan",
       },
       {
-        title: "Uang Pangkal",
+        title: "Tagihan Lainnya",
         url: "/transaksi-uang-pangkal",
       },
     ],

@@ -5,9 +5,10 @@
 import AppBreadcrumbs from "@/components/common/app-breadcrums";
 import AuthService from "@/services/auth/auth.service";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Input } from "antd";
+import { Button, Input, Divider } from "antd";
 import { useState } from "react";
 import { toast } from "sonner";
+import { EditProfileForm, UpdateEmailForm } from "./_components";
 
 function ProfilePage() {
   const [newPassword, setNewPassword] = useState("");
@@ -84,28 +85,21 @@ function ProfilePage() {
         <p className="text-xl font-medium">Profile</p>
       </div>
 
-      <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
-        <div className="space-y-1">
-          <label className="text-xs">Nama</label>
-          <Input placeholder="Nama" disabled value={me?.data.nama} />
-        </div>
-        <div className="space-y-1">
-          <label className="text-xs">Email</label>
-          <Input placeholder="Email" disabled value={me?.data.email} />
-        </div>
-        <div className="space-y-1">
-          <label className="text-xs">No HP</label>
-          <Input placeholder="No HP" disabled value={me?.data.no_hp} />
-        </div>
-        <div className="space-y-1">
-          <label className="text-xs">Pekerjaan</label>
-          <Input
-            placeholder="Pekerjaan"
-            disabled
-            value={me?.data.pekerjaan || "-"}
-          />
-        </div>
-      </div>
+      {/* Edit Profile Form */}
+      <EditProfileForm
+        initialData={{
+          nama: me?.data.nama,
+          no_hp: me?.data.no_hp,
+          pekerjaan: me?.data.pekerjaan,
+        }}
+      />
+
+      <Divider />
+
+      {/* Update Email Form */}
+      <UpdateEmailForm currentEmail={me?.data.email} />
+
+      <Divider />
 
       <div className="space-y-3">
         <p className="font-medium">Ganti Password</p>

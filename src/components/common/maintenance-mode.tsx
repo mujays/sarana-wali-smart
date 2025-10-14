@@ -109,11 +109,11 @@ export default function MaintenanceMode() {
           <div className="flex justify-center space-x-6 text-sm">
             <div className="flex items-center space-x-2 text-gray-600">
               <span>📧</span>
-              <span>support@smartschool.id</span>
+              <span>smartschooljagakarsa@gmail.com</span>
             </div>
             <div className="flex items-center space-x-2 text-gray-600">
               <span>📞</span>
-              <span>+62 123 456 7890</span>
+              <span>+62 895 2983 6939</span>
             </div>
           </div>
         </div>

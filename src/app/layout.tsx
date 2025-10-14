@@ -3,6 +3,7 @@ import QueryProvider from "@/providers/query-client";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
+import MaintenanceMode from "@/components/common/maintenance-mode";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,7 +21,11 @@ export default function RootLayout({
         <QueryProvider>
           <AntdRegistry>
             <NextTopLoader />
-            <div>{children}</div>
+            {process.env.MAINTENANCE_MODE === "true" ? (
+              <MaintenanceMode />
+            ) : (
+              <div>{children}</div>
+            )}
             <Toaster richColors position="top-right" />
           </AntdRegistry>
         </QueryProvider>

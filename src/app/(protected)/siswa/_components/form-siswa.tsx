@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useEmojiValidation } from "@/hooks/use-emoji-validation";
 
 function FormSiswa() {
   const [loading, setLoading] = useState(false);
@@ -27,6 +28,13 @@ function FormSiswa() {
   const [urlavatar, setUrlavatar] = useState<string>("");
 
   const [form] = Form.useForm();
+
+  // Hook untuk emoji validation
+  const { handleInputChange, handleTextAreaChange, handlePaste } =
+    useEmojiValidation({
+      showToast: true,
+      autoClean: true,
+    });
 
   const { id } = useParams();
   const { data: siswa, isLoading } = useQuery({
@@ -127,10 +135,11 @@ function FormSiswa() {
                   <Input
                     placeholder="NIK"
                     maxLength={255}
-                    onChange={(e) => {
+                    onChange={handleInputChange((e) => {
                       const value = e.target.value.replace(/\D/g, "");
                       form.setFieldsValue({ nik: value });
-                    }}
+                    })}
+                    onPaste={handlePaste}
                   />
                 </Form.Item>
                 <Form.Item
@@ -139,7 +148,14 @@ function FormSiswa() {
                   className="w-full !mb-2"
                   rules={[{ required: true, message: "Nama harus diisi" }]}
                 >
-                  <Input placeholder="Nama" maxLength={255} />
+                  <Input
+                    placeholder="Nama"
+                    maxLength={255}
+                    onChange={handleInputChange((e) => {
+                      form.setFieldsValue({ nama: e.target.value });
+                    })}
+                    onPaste={handlePaste}
+                  />
                 </Form.Item>
               </div>
               <div className="flex flex-col md:flex-row gap-2">
@@ -180,7 +196,14 @@ function FormSiswa() {
                     { required: true, message: "Kewarganegaraan harus diisi" },
                   ]}
                 >
-                  <Input placeholder="kewarganegaraan" maxLength={255} />
+                  <Input
+                    placeholder="kewarganegaraan"
+                    maxLength={255}
+                    onChange={handleInputChange((e) => {
+                      form.setFieldsValue({ kewarganegaraan: e.target.value });
+                    })}
+                    onPaste={handlePaste}
+                  />
                 </Form.Item>
               </div>
               <Form.Item
@@ -189,7 +212,14 @@ function FormSiswa() {
                 className="w-full !mb-2"
                 rules={[{ required: true, message: "Alamat harus diisi" }]}
               >
-                <Input.TextArea placeholder="Tulis alamat..." maxLength={255} />
+                <Input.TextArea
+                  placeholder="Tulis alamat..."
+                  maxLength={255}
+                  onChange={handleTextAreaChange((e) => {
+                    form.setFieldsValue({ alamat: e.target.value });
+                  })}
+                  onPaste={handlePaste}
+                />
               </Form.Item>
 
               <div className="flex flex-col md:flex-row gap-2">
@@ -198,7 +228,14 @@ function FormSiswa() {
                   name="tempat_lahir"
                   className="w-full !mb-2"
                 >
-                  <Input placeholder="Tempat Lahir" maxLength={255} />
+                  <Input
+                    placeholder="Tempat Lahir"
+                    maxLength={255}
+                    onChange={handleInputChange((e) => {
+                      form.setFieldsValue({ tempat_lahir: e.target.value });
+                    })}
+                    onPaste={handlePaste}
+                  />
                 </Form.Item>
                 <Form.Item
                   name="tanggal_lahir"
@@ -222,7 +259,14 @@ function FormSiswa() {
                   className="w-full !mb-2"
                   rules={[{ required: true, message: "Agama harus diisi" }]}
                 >
-                  <Input placeholder="Agama" maxLength={255} />
+                  <Input
+                    placeholder="Agama"
+                    maxLength={255}
+                    onChange={handleInputChange((e) => {
+                      form.setFieldsValue({ agama: e.target.value });
+                    })}
+                    onPaste={handlePaste}
+                  />
                 </Form.Item>
                 <Form.Item
                   className="w-full !mb-2"
@@ -256,14 +300,22 @@ function FormSiswa() {
                   <Input
                     placeholder="Telepon"
                     maxLength={255}
-                    onChange={(e) => {
+                    onChange={handleInputChange((e) => {
                       const value = e.target.value.replace(/\D/g, "");
                       form.setFieldsValue({ telp_rumah: value });
-                    }}
+                    })}
+                    onPaste={handlePaste}
                   />
                 </Form.Item>
                 <Form.Item label="Suku" name="suku" className="w-full !mb-2">
-                  <Input placeholder="Suku" maxLength={255} />
+                  <Input
+                    placeholder="Suku"
+                    maxLength={255}
+                    onChange={handleInputChange((e) => {
+                      form.setFieldsValue({ suku: e.target.value });
+                    })}
+                    onPaste={handlePaste}
+                  />
                 </Form.Item>
               </div>
               <div className="flex flex-col md:flex-row gap-2">
@@ -276,10 +328,11 @@ function FormSiswa() {
                     placeholder="Tinggi Badan"
                     maxLength={255}
                     suffix="CM"
-                    onChange={(e) => {
+                    onChange={handleInputChange((e) => {
                       const value = e.target.value.replace(/\D/g, "");
                       form.setFieldsValue({ tinggi_badan: value });
-                    }}
+                    })}
+                    onPaste={handlePaste}
                   />
                 </Form.Item>
                 <Form.Item
@@ -291,10 +344,11 @@ function FormSiswa() {
                     placeholder="Berat Badan"
                     maxLength={255}
                     suffix="Kg"
-                    onChange={(e) => {
+                    onChange={handleInputChange((e) => {
                       const value = e.target.value.replace(/\D/g, "");
                       form.setFieldsValue({ berat_badan: value });
-                    }}
+                    })}
+                    onPaste={handlePaste}
                   />
                 </Form.Item>
                 <Form.Item
@@ -306,10 +360,11 @@ function FormSiswa() {
                     placeholder="Lingkar Kepala"
                     maxLength={255}
                     suffix="CM"
-                    onChange={(e) => {
+                    onChange={handleInputChange((e) => {
                       const value = e.target.value.replace(/\D/g, "");
                       form.setFieldsValue({ lingkar_kepala: value });
-                    }}
+                    })}
+                    onPaste={handlePaste}
                   />
                 </Form.Item>
               </div>
@@ -370,10 +425,11 @@ function FormSiswa() {
                   <Input
                     placeholder="Anak Ke"
                     maxLength={255}
-                    onChange={(e) => {
+                    onChange={handleInputChange((e) => {
                       const value = e.target.value.replace(/\D/g, "");
                       form.setFieldsValue({ anak_ke: value });
-                    }}
+                    })}
+                    onPaste={handlePaste}
                   />
                 </Form.Item>
                 <Form.Item
@@ -384,10 +440,11 @@ function FormSiswa() {
                   <Input
                     placeholder="Dari Berapa Saudara"
                     maxLength={255}
-                    onChange={(e) => {
+                    onChange={handleInputChange((e) => {
                       const value = e.target.value.replace(/\D/g, "");
                       form.setFieldsValue({ jumlah_saudara: value });
-                    }}
+                    })}
+                    onPaste={handlePaste}
                   />
                 </Form.Item>
               </div>

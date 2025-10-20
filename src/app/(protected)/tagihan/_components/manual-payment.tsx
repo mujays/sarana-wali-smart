@@ -80,6 +80,7 @@ export function ManualPayment({ tagihanId }: { tagihanId: number }) {
         okText="Konfirmasi"
         okButtonProps={{
           loading: isLoadingUpload,
+          disabled: !proofPayment || isLoadingUpload,
         }}
         onOk={handlePayment}
         confirmLoading={isLoadingUpload}

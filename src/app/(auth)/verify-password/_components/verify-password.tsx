@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useEmojiValidation } from "@/hooks/use-emoji-validation";
 
 function VerifyPassword() {
   const [newPassword, setNewPassword] = useState("");
@@ -14,6 +15,10 @@ function VerifyPassword() {
 
   const [errorNewPassword, setErrorNewPassword] = useState("");
   const [errorConfirm, setErrorConfirm] = useState("");
+
+  const { handleInputChange, handlePaste } = useEmojiValidation({
+    fieldName: "Password",
+  });
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? null;
@@ -75,7 +80,8 @@ function VerifyPassword() {
             <Input.Password
               placeholder="Password Baru"
               value={newPassword}
-              onChange={handleChangeNewPassword}
+              onChange={handleInputChange(handleChangeNewPassword)}
+              onPaste={handlePaste}
             />
             {errorNewPassword && (
               <p className="text-red-500 text-xs">{errorNewPassword}</p>
@@ -87,7 +93,8 @@ function VerifyPassword() {
             <Input.Password
               placeholder="Konfirmasi Password Baru"
               value={confirmPassword}
-              onChange={handleChangeConfirmPassword}
+              onChange={handleInputChange(handleChangeConfirmPassword)}
+              onPaste={handlePaste}
             />
             {errorConfirm && (
               <p className="text-red-500 text-xs">{errorConfirm}</p>

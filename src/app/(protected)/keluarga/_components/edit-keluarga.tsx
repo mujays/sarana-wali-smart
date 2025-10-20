@@ -22,6 +22,7 @@ import moment from "moment";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useEmojiValidation } from "@/hooks/use-emoji-validation";
 
 function EditKeluarga({ keluargaId }: { keluargaId: number }) {
   const modal = useDisclosure();
@@ -30,6 +31,10 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
   const [hubunganValue, setHubunganValue] = useState("");
   const [isLoadingUpload, setIsLoadingUpload] = useState(false);
   const [ktpFile, setFileKtp] = useState("");
+  const { handleInputChange, handleTextAreaChange, handlePaste } =
+    useEmojiValidation({
+      fieldName: "Input",
+    });
 
   const queryClient = useQueryClient();
 
@@ -112,7 +117,7 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
         setFileKtp(family.data.ktp);
       }
     }
-  }, [family, modal]);
+  }, [family, form]);
 
   return (
     <Tooltip title="Edit">
@@ -149,7 +154,14 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
               className="w-full !mb-2"
               rules={[{ required: true, message: "Nama harus diisi" }]}
             >
-              <Input placeholder="Nama" maxLength={255} />
+              <Input
+                placeholder="Nama"
+                maxLength={255}
+                onChange={handleInputChange((e) => {
+                  form.setFieldsValue({ nama: e.target.value });
+                })}
+                onPaste={handlePaste}
+              />
             </Form.Item>
             <Form.Item
               name="tanggal_lahir"
@@ -173,10 +185,11 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
             <Input
               placeholder="NIK"
               maxLength={255}
-              onChange={(e) => {
+              onChange={handleInputChange((e) => {
                 const value = e.target.value.replace(/\D/g, "");
                 form.setFieldsValue({ nik: value });
-              }}
+              })}
+              onPaste={handlePaste}
             />
           </Form.Item>
 
@@ -240,7 +253,14 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
               className="w-full !mb-2"
               rules={[{ required: true, message: "Hubungan harus diisi" }]}
             >
-              <Input placeholder="Hubungan" maxLength={255} />
+              <Input
+                placeholder="Hubungan"
+                maxLength={255}
+                onChange={handleInputChange((e) => {
+                  form.setFieldsValue({ hubungan: e.target.value });
+                })}
+                onPaste={handlePaste}
+              />
             </Form.Item>
           )}
 
@@ -286,7 +306,14 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
               className="!mb-2 w-full"
               rules={[{ required: true, message: "Pekerjaan harus diisi" }]}
             >
-              <Input placeholder="Pekerjaan" maxLength={255} />
+              <Input
+                placeholder="Pekerjaan"
+                maxLength={255}
+                onChange={handleInputChange((e) => {
+                  form.setFieldsValue({ pekerjaan: e.target.value });
+                })}
+                onPaste={handlePaste}
+              />
             </Form.Item>
             <Form.Item
               label="Gaji"
@@ -298,10 +325,11 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
                 prefix="Rp. "
                 placeholder="Gaji"
                 maxLength={255}
-                onChange={(e) => {
+                onChange={handleInputChange((e) => {
                   const value = e.target.value.replace(/\D/g, "");
                   form.setFieldsValue({ gaji: value });
-                }}
+                })}
+                onPaste={handlePaste}
               />
             </Form.Item>
           </div>
@@ -311,7 +339,14 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
             className="!mb-2"
             rules={[{ required: true, message: "Pendidikan harus diisi" }]}
           >
-            <Input placeholder="Pendidikan" maxLength={255} />
+            <Input
+              placeholder="Pendidikan"
+              maxLength={255}
+              onChange={handleInputChange((e) => {
+                form.setFieldsValue({ pendidikan: e.target.value });
+              })}
+              onPaste={handlePaste}
+            />
           </Form.Item>
           <Form.Item
             label="Nomor Telepon"
@@ -319,7 +354,14 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
             className="!mb-2"
             rules={[{ required: true, message: "Nomor Telepon harus diisi" }]}
           >
-            <Input placeholder="Nomor Telepon" maxLength={255} />
+            <Input
+              placeholder="Nomor Telepon"
+              maxLength={255}
+              onChange={handleInputChange((e) => {
+                form.setFieldsValue({ no_hp: e.target.value });
+              })}
+              onPaste={handlePaste}
+            />
           </Form.Item>
           <div className="flex gap-2">
             <Form.Item
@@ -328,10 +370,24 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
               className="!mb-2 w-full"
               rules={[{ required: true, message: "Agama harus diisi" }]}
             >
-              <Input placeholder="Agama" maxLength={255} />
+              <Input
+                placeholder="Agama"
+                maxLength={255}
+                onChange={handleInputChange((e) => {
+                  form.setFieldsValue({ agama: e.target.value });
+                })}
+                onPaste={handlePaste}
+              />
             </Form.Item>
             <Form.Item label="Suku" name="suku" className="!mb-2 w-full">
-              <Input placeholder="Suku" maxLength={255} />
+              <Input
+                placeholder="Suku"
+                maxLength={255}
+                onChange={handleInputChange((e) => {
+                  form.setFieldsValue({ suku: e.target.value });
+                })}
+                onPaste={handlePaste}
+              />
             </Form.Item>
           </div>
           <Form.Item
@@ -340,7 +396,14 @@ function EditKeluarga({ keluargaId }: { keluargaId: number }) {
             className="!mb-2"
             rules={[{ required: true, message: "Alamat harus diisi" }]}
           >
-            <Input.TextArea placeholder="Alamat" maxLength={255} />
+            <Input.TextArea
+              placeholder="Alamat"
+              maxLength={255}
+              onChange={handleTextAreaChange((e) => {
+                form.setFieldsValue({ alamat: e.target.value });
+              })}
+              onPaste={handlePaste}
+            />
           </Form.Item>
         </Form>
       </Modal>

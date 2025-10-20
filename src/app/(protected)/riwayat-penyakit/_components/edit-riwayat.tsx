@@ -8,11 +8,15 @@ import { AxiosError } from "axios";
 import { EditIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useEmojiValidation } from "@/hooks/use-emoji-validation";
 
 function EditRiwayat({ riwayatId }: { riwayatId: number }) {
   const modal = useDisclosure();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { handleInputChange, handlePaste } = useEmojiValidation({
+    fieldName: "Jenis Penyakit",
+  });
 
   const queryClient = useQueryClient();
 
@@ -51,7 +55,7 @@ function EditRiwayat({ riwayatId }: { riwayatId: number }) {
     if (riwayat) {
       form.setFieldValue("jenis_penyakit", riwayat.data.jenis_penyakit);
     }
-  }, [riwayat, modal]);
+  }, [riwayat, form]);
 
   return (
     <Tooltip title="Edit">
@@ -87,7 +91,14 @@ function EditRiwayat({ riwayatId }: { riwayatId: number }) {
                 { required: true, message: "Jenis Penyakit harus diisi" },
               ]}
             >
-              <Input placeholder="Jenis Penyakit" maxLength={255} />
+              <Input
+                placeholder="Jenis Penyakit"
+                maxLength={255}
+                onChange={handleInputChange((e) => {
+                  form.setFieldsValue({ jenis_penyakit: e.target.value });
+                })}
+                onPaste={handlePaste}
+              />
             </Form.Item>
           </div>
         </Form>

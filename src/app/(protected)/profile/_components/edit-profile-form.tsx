@@ -8,6 +8,8 @@ import AuthService from "@/services/auth/auth.service";
 import { toast } from "sonner";
 import errorResponse from "@/lib/error";
 import { AxiosError } from "axios";
+import { useEmojiValidation } from "@/hooks/use-emoji-validation";
+import { containsEmoji, removeEmojis } from "@/lib/emoji-utils";
 
 interface EditProfileFormProps {
   initialData?: {
@@ -34,6 +36,9 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
+  const { handlePaste } = useEmojiValidation({
+    fieldName: "Input",
+  });
 
   // Form state
   const [formData, setFormData] = useState<FormData>({
@@ -177,9 +182,16 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({
     }
   }; // Input change handlers
   const handleInputChange = (field: keyof FormData, value: string) => {
+    // Check if value contains emojis and clean if needed
+    let cleanedValue = value;
+    if (containsEmoji(value)) {
+      cleanedValue = removeEmojis(value);
+      toast.error(`${field} tidak boleh mengandung emoji`);
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [field]: value,
+      [field]: cleanedValue,
     }));
 
     // Validate field on change if already touched
@@ -187,13 +199,13 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({
       let error = "";
       switch (field) {
         case "nama":
-          error = validateNama(value);
+          error = validateNama(cleanedValue);
           break;
         case "no_hp":
-          error = validateNoHp(value);
+          error = validateNoHp(cleanedValue);
           break;
         case "pekerjaan":
-          error = validatePekerjaan(value);
+          error = validatePekerjaan(cleanedValue);
           break;
       }
       setErrors((prev) => ({
@@ -274,6 +286,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({
                 value={formData.nama}
                 onChange={(e) => handleInputChange("nama", e.target.value)}
                 onBlur={() => handleBlur("nama")}
+                onPaste={handlePaste}
                 status={touched.nama && errors.nama ? "error" : ""}
               />
               {touched.nama && errors.nama && (
@@ -293,6 +306,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({
                 value={formData.no_hp}
                 onChange={handlePhoneNumberChange}
                 onBlur={() => handleBlur("no_hp")}
+                onPaste={handlePaste}
                 addonBefore="+62"
                 status={touched.no_hp && errors.no_hp ? "error" : ""}
               />
@@ -317,6 +331,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({
               value={formData.pekerjaan}
               onChange={(e) => handleInputChange("pekerjaan", e.target.value)}
               onBlur={() => handleBlur("pekerjaan")}
+              onPaste={handlePaste}
               status={touched.pekerjaan && errors.pekerjaan ? "error" : ""}
             />
             {touched.pekerjaan && errors.pekerjaan && (

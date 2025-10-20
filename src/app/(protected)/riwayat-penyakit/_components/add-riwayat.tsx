@@ -8,11 +8,15 @@ import { AxiosError } from "axios";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useEmojiValidation } from "@/hooks/use-emoji-validation";
 
 function AddRiwayat({ siswaId }: { siswaId: number }) {
   const modal = useDisclosure();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { handleInputChange, handlePaste } = useEmojiValidation({
+    fieldName: "Jenis Penyakit",
+  });
 
   const queryClient = useQueryClient();
 
@@ -65,7 +69,14 @@ function AddRiwayat({ siswaId }: { siswaId: number }) {
                 { required: true, message: "Jenis Penyakit harus diisi" },
               ]}
             >
-              <Input placeholder="Jenis Penyakit" maxLength={255} />
+              <Input
+                placeholder="Jenis Penyakit"
+                maxLength={255}
+                onChange={handleInputChange((e) => {
+                  form.setFieldsValue({ jenis_penyakit: e.target.value });
+                })}
+                onPaste={handlePaste}
+              />
             </Form.Item>
           </div>
         </Form>

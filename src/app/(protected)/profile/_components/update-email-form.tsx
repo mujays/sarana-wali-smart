@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import errorResponse from "@/lib/error";
 import { AxiosError } from "axios";
 import { Eye, EyeOff, RefreshCcw } from "lucide-react";
+import { useEmojiValidation } from "@/hooks/use-emoji-validation";
+import { containsEmoji, removeEmojis } from "@/lib/emoji-utils";
 
 interface UpdateEmailFormProps {
   currentEmail?: string;
@@ -33,6 +35,9 @@ export const UpdateEmailForm: React.FC<UpdateEmailFormProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const queryClient = useQueryClient();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { handlePaste } = useEmojiValidation({
+    fieldName: "Input",
+  });
 
   // Form state
   const [formData, setFormData] = useState<EmailFormData>({
@@ -202,9 +207,16 @@ export const UpdateEmailForm: React.FC<UpdateEmailFormProps> = ({
 
   // Input change handlers
   const handleInputChange = (field: keyof EmailFormData, value: string) => {
+    // Check if value contains emojis and clean if needed
+    let cleanedValue = value;
+    if (containsEmoji(value)) {
+      cleanedValue = removeEmojis(value);
+      toast.error(`${field} tidak boleh mengandung emoji`);
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [field]: value,
+      [field]: cleanedValue,
     }));
 
     // Validate field on change if already touched
@@ -212,13 +224,13 @@ export const UpdateEmailForm: React.FC<UpdateEmailFormProps> = ({
       let error = "";
       switch (field) {
         case "newEmail":
-          error = validateNewEmail(value);
+          error = validateNewEmail(cleanedValue);
           break;
         case "password":
-          error = validatePassword(value);
+          error = validatePassword(cleanedValue);
           break;
         case "captcha":
-          error = validateCaptcha(value);
+          error = validateCaptcha(cleanedValue);
           break;
       }
       setErrors((prev) => ({
@@ -334,6 +346,7 @@ export const UpdateEmailForm: React.FC<UpdateEmailFormProps> = ({
               value={formData.newEmail}
               onChange={(e) => handleInputChange("newEmail", e.target.value)}
               onBlur={() => handleBlur("newEmail")}
+              onPaste={handlePaste}
               status={touched.newEmail && errors.newEmail ? "error" : ""}
             />
             {touched.newEmail && errors.newEmail && (
@@ -354,6 +367,7 @@ export const UpdateEmailForm: React.FC<UpdateEmailFormProps> = ({
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
                 onBlur={() => handleBlur("password")}
+                onPaste={handlePaste}
                 status={touched.password && errors.password ? "error" : ""}
                 suffix={
                   <button
@@ -410,6 +424,7 @@ export const UpdateEmailForm: React.FC<UpdateEmailFormProps> = ({
                   value={formData.captcha}
                   onChange={(e) => handleInputChange("captcha", e.target.value)}
                   onBlur={() => handleBlur("captcha")}
+                  onPaste={handlePaste}
                   status={touched.captcha && errors.captcha ? "error" : ""}
                   maxLength={6}
                 />

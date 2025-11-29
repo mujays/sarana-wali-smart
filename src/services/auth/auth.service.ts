@@ -47,6 +47,10 @@ const AuthService = {
     const response = await axiosConfig.post(`/reset-password`, payload);
     return response.data;
   },
+  healthCheck: async () => {
+    const response = await axiosConfig.get<{ status: string }>("/health");
+    return response.data;
+  },
 };
 
 export default AuthService;
